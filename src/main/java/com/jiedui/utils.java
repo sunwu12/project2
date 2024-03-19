@@ -9,13 +9,28 @@ public class utils {
         Random rand = new Random();
         int a=rand.nextInt(maxValue);
         int b=rand.nextInt(maxValue);
-        int result=0;
+        String result=null;
         char sign = chars[rand.nextInt(4)];
         switch (sign){
-            case '+':result=a+b;break;
-            case '-':result=a-b;break;
-            case '×':result=a*b;break;
-            case '÷':result=a/b;break;
+            case '+':{
+                int r=a+b;
+                result=String.valueOf(r);
+                break;
+            }
+            case '-':{
+                int r=a-b;
+                result=String.valueOf(r);
+                break;
+            }
+            case '×':{
+                int r=a*b;
+                result=String.valueOf(r);
+                break;
+            }
+            case '÷':{
+                result=GPF(a,b);
+                break;
+            }
         }
         String s=a+" "+sign+" "+b+" = "+result;
         System.out.println(s);
