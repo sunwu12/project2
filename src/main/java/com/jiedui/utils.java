@@ -146,6 +146,9 @@ public class utils {
             if (A == '-') {
                 if (str1_num[1] == str2_num[1]) {
                     int Numerator = str1_num[0] - str2_num[0];
+                    if(Numerator<0){
+                        return null;
+                    }
                     int Denominator = str1_num[1];
                     String k = GPF(Numerator, Denominator);
                     System.out.println(k);
@@ -153,6 +156,9 @@ public class utils {
                 } else {
                     int Denominator = str1_num[1] * str2_num[1];
                     int Numerator = str1_num[0] * str2_num[1] - str2_num[0] * str1_num[1];
+                    if(Numerator<0){
+                        return null;
+                    }
                     String k = GPF(Numerator, Denominator);
                     System.out.println(k);
                     return k;
@@ -168,6 +174,9 @@ public class utils {
             if(A=='÷'){
                 int Numerator=str1_num[0]*str2_num[1];
                 int Denominator=str1_num[1]*str2_num[0];
+                if(Denominator<=0){
+                    return null;
+                }
                 String k=GPF(Numerator,Denominator);
                 System.out.println(k);
                 return k;
