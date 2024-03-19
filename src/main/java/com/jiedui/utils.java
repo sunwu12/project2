@@ -1,41 +1,42 @@
 package com.jiedui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class utils {
 
-    public static String getRandomSign(int count,int maxValue){
+    //生成一个表达式
+    public static Expression getExpression(int maxValue){
         char[] chars = {'+','-','×','÷'};
         Random rand = new Random();
-        int a=rand.nextInt(maxValue);
-        int b=rand.nextInt(maxValue);
-        String result=null;
-        char sign = chars[rand.nextInt(4)];
-        switch (sign){
-            case '+':{
-                int r=a+b;
-                result=String.valueOf(r);
-                break;
+        String expression,value;
+        while(true){
+            int a=rand.nextInt(maxValue);
+            int b=rand.nextInt(maxValue);
+            char sign = chars[rand.nextInt(4)];
+            if(sign=='+'){
+                value= String.valueOf(a+b);
+                expression = a+" + "+b;
+            } else if(sign=='-'){
+                if(a<b)continue;
+                value= String.valueOf(a-b);
+                expression = a+" - "+b;
+            } else if(sign=='×'){
+                value= String.valueOf(a*b);
+                expression = a+" × "+b;
+            }else{
+                if(b==0)continue;
+                value= GPF(a,b);
+                expression = a+" ÷ "+b;
             }
-            case '-':{
-                int r=a-b;
-                result=String.valueOf(r);
-                break;
-            }
-            case '×':{
-                int r=a*b;
-                result=String.valueOf(r);
-                break;
-            }
-            case '÷':{
-                result=GPF(a,b);
-                break;
-            }
+            //results.add(splicing(a,b,sign,result));
+            break;
         }
-        String s=a+" "+sign+" "+b+" = "+result;
-        System.out.println(s);
-        return s;
+        return new Expression(value,expression);
     }
+
+
     /*
     计算公约数用于约分
      */
