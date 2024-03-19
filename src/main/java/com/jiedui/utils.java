@@ -4,41 +4,36 @@ import java.util.Objects;
 import java.util.Random;
 
 public class utils {
-    static char[] signArr = {'+','-','×','÷',' '};
+    static char[] signArr = {'+','-','×','÷'};
 
     public static Expression[] getAllExpression(int count,int maxValue){
         Expression[] es = new Expression[count];
         Random rand = new Random();
-        while(count > 0){
-            char sign=signArr[rand.nextInt(4)];
-            Expression e1 = getExpression(maxValue);
-            Expression e2 = getExpression(maxValue);
-            if(divisionFractionCalculate(e1.value,e2.value,sign)==null)continue;
-            es[es.length-count]=Expression.splicing(e1,e2,sign);
-            count--;
-        }
+        int a=rand.nextInt(4);
         return es;
     }
 
     //生成一个表达式
-    public static Expression getExpression(int maxValue){
-        Random rand = new Random();
-        String value,expression;
-        char sign;
-        while (true){
-            sign=signArr[rand.nextInt(5)];
-            String ran1=GPF(rand.nextInt(maxValue), rand.nextInt(maxValue) );
-            String ran2=GPF(rand.nextInt(maxValue), rand.nextInt(maxValue) );
-            if(sign==' '){
-                return new Expression(ran1);
-            }else {
-                value=divisionFractionCalculate(ran1,ran2,sign);
-                if(value==null)continue;
-                expression=ran1+" "+sign+" "+ran2;
+    public static Expression getExpression(int maxValue,int num){
+        if(num==0)return new Expression(maxValue);
+        else {
+            while(true){
+                Random rand = new Random();
+                char sign=signArr[rand.nextInt(4)];
+                Expression e1=new Expression(maxValue);
+                Expression e2=getExpression(maxValue,num-1);
+                if(utils.divisionFractionCalculate(e1.value,e2.value,sign)==null)continue;
+                return Expression.splicing(e1,e2,signArr[rand.nextInt(4)]);
             }
-            break;
+
         }
-        return new Expression(value,expression,sign);
+    }
+
+    public static String getRandomValue(int maxValue){
+        Random random=new Random();
+        if(random.nextBoolean()){//生成随机真分数
+            return GPF(random.nextInt(maxValue),random.nextInt(maxValue));
+        }else return String.valueOf(random.nextInt(maxValue));//生成随机整数
     }
 
 
