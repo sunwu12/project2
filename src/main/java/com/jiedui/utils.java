@@ -1,37 +1,54 @@
 package com.jiedui;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class utils {
+    static char[] signArr = {'+','-','×','÷',' '};
+
+    public static Expression[] getAllExpression(int count,int maxValue){
+        Expression[] es = new Expression[count];
+        Random rand = new Random();
+        while(count > 0){
+            char sign=signArr[rand.nextInt(4)];
+            Expression e1 = getExpression(maxValue);
+            Expression e2 = getExpression(maxValue);
+            //表达式相减为负数
+            if(sign=='-'&&!Expression.couldSubtract(e1,e2))continue;
+            //被除数为0
+            if(sign=='÷'&& Objects.equals(e2.value, "0"))continue;
+            es[es.length-count]=Expression.splicing(e1,e2,sign);
+            count--;
+        }
+        return es;
+    }
 
     //生成一个表达式
-    public static Expression getExpression(int maxValue) {
-        char[] chars = {'+', '-', '×', '÷'};
+    public static Expression getExpression(int maxValue){
         Random rand = new Random();
-        String expression, value;
-        while (true) {
-            int a = rand.nextInt(maxValue);
-            int b = rand.nextInt(maxValue);
-            char sign = chars[rand.nextInt(4)];
-            if (sign == '+') {
-                value = String.valueOf(a + b);
-                expression = a + " + " + b;
-            } else if (sign == '-') {
-                if (a < b) continue;
-                value = String.valueOf(a - b);
-                expression = a + " - " + b;
-            } else if (sign == '×') {
-                value = String.valueOf(a * b);
-                expression = a + " × " + b;
-            } else {
-                if (b == 0) continue;
-                value = GPF(a, b);
-                expression = a + " ÷ " + b;
+        String value,expression;
+        char sign;
+        while (true){
+            sign=signArr[rand.nextInt(5)];
+            int a=rand.nextInt(maxValue),b=rand.nextInt(maxValue);
+            if(sign==' '){
+                return new Expression(a);
+            }else if(sign=='+'){
+                value=String.valueOf(a+b);
+            }else if(sign=='-'){
+                if(a-b<0)continue;
+                value=String.valueOf(a-b);
+            }else if(sign=='×'){
+                value=String.valueOf(a*b);
+            }else{
+                if(b==0)continue;
+                value=GPF(a,b);
             }
-            //results.add(splicing(a,b,sign,result));
+            expression=a+" "+sign+" "+b;
             break;
         }
-        return new Expression(value, expression);
+
+        return new Expression(value,expression,sign);
     }
 
 
