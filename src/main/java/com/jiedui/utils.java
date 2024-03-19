@@ -64,7 +64,10 @@ public class utils {
 
 
     public static String GPF(int x, int y) {
-
+        if(y==0)
+        {
+            return null;
+        }
         if (x % y == 0) {
             return String.valueOf(x / y);
         } else {
@@ -174,7 +177,7 @@ public class utils {
             if(A=='÷'){
                 int Numerator=str1_num[0]*str2_num[1];
                 int Denominator=str1_num[1]*str2_num[0];
-                if(Denominator<=0){
+                if(Denominator==0){
                     return null;
                 }
                 String k=GPF(Numerator,Denominator);
