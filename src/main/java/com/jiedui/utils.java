@@ -1,7 +1,7 @@
 package com.jiedui;
 
 public class utils {
-    public static String GPF(String x, String y) {
+    public static String getProperFration(String x, String y) {
         int num1 = Integer.parseInt(x);
         int num2 = Integer.parseInt(y);
         if (num1 < num2) {
