@@ -128,7 +128,7 @@ public class utils {
             }
             if (A == '-') {
                 if (str1_num[1] == str2_num[1]) {
-                    int Numerator = str1_num[0] - str1_num[0];
+                    int Numerator = str1_num[0] - str2_num[0];
                     int Denominator = str1_num[1];
                     String k = GPF(Numerator, Denominator);
                     System.out.println(k);
