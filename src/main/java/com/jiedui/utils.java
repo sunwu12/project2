@@ -13,10 +13,7 @@ public class utils {
             char sign=signArr[rand.nextInt(4)];
             Expression e1 = getExpression(maxValue);
             Expression e2 = getExpression(maxValue);
-            //表达式相减为负数
-            if(sign=='-'&&!Expression.couldSubtract(e1,e2))continue;
-            //被除数为0
-            if(sign=='÷'&& Objects.equals(e2.value, "0"))continue;
+            if(divisionFractionCalculate(e1.value,e2.value,sign)==null)continue;
             es[es.length-count]=Expression.splicing(e1,e2,sign);
             count--;
         }
@@ -30,24 +27,17 @@ public class utils {
         char sign;
         while (true){
             sign=signArr[rand.nextInt(5)];
-            int a=rand.nextInt(maxValue),b=rand.nextInt(maxValue);
+            String ran1=GPF(rand.nextInt(maxValue), rand.nextInt(maxValue) );
+            String ran2=GPF(rand.nextInt(maxValue), rand.nextInt(maxValue) );
             if(sign==' '){
-                return new Expression(a);
-            }else if(sign=='+'){
-                value=String.valueOf(a+b);
-            }else if(sign=='-'){
-                if(a-b<0)continue;
-                value=String.valueOf(a-b);
-            }else if(sign=='×'){
-                value=String.valueOf(a*b);
-            }else{
-                if(b==0)continue;
-                value=GPF(a,b);
+                return new Expression(ran1);
+            }else {
+                value=divisionFractionCalculate(ran1,ran2,sign);
+                if(value==null)continue;
+                expression=ran1+" "+sign+" "+ran2;
             }
-            expression=a+" "+sign+" "+b;
             break;
         }
-
         return new Expression(value,expression,sign);
     }
 
@@ -63,6 +53,7 @@ public class utils {
     }
 
 
+    //相除得真分数
     public static String GPF(int x, int y) {
         if(y==0)
         {

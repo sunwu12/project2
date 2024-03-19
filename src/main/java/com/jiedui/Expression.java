@@ -9,9 +9,9 @@ public class Expression {
 
     public Expression(){}
 
-    public Expression(int value){
-        this.value= String.valueOf(value);
-        this.expression= String.valueOf(value);
+    public Expression(String value){
+        this.value= value;
+        this.expression= value;
         this.num=0;
     }
 
@@ -33,6 +33,7 @@ public class Expression {
             if(rightE.keySign=='+'||rightE.keySign=='-')addBrackets(rightE);
         }
         if(sign=='÷'&&(rightE.keySign=='÷'||rightE.keySign=='×'))addBrackets(rightE);
+        if(sign=='-'&&(rightE.keySign=='+'||rightE.keySign=='-'))addBrackets(rightE);
         newE.leftSign=leftE.keySign;
         newE.rightSign=rightE.keySign;
         newE.keySign=sign;
@@ -48,10 +49,6 @@ public class Expression {
     }
 
     //判断能否相减
-    public static boolean couldSubtract(Expression leftE,Expression rightE){
-        String cha=utils.divisionFractionCalculate(leftE.value,rightE.value,'-');
-        return !cha.contains("-");
-    }
 
     @Override
     public String toString() {
