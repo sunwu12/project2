@@ -127,13 +127,11 @@ public class utils {
                     int Numerator = str1_num[0] + str2_num[0];
                     int Denominator = str1_num[1];
                     String k = GPF(Numerator, Denominator);
-                    System.out.println(k);
                     return k;
                 } else {
                     int Denominator = str1_num[1] * str2_num[1];
                     int Numerator = str1_num[0] * str2_num[1] + str2_num[0] * str1_num[1];
                     String k = GPF(Numerator, Denominator);
-                    System.out.println(k);
                     return k;
                 }
             }
@@ -145,7 +143,6 @@ public class utils {
                     }
                     int Denominator = str1_num[1];
                     String k = GPF(Numerator, Denominator);
-                    System.out.println(k);
                     return k;
                 } else {
                     int Denominator = str1_num[1] * str2_num[1];
@@ -154,7 +151,6 @@ public class utils {
                         return null;
                     }
                     String k = GPF(Numerator, Denominator);
-                    System.out.println(k);
                     return k;
                 }
             }
@@ -162,7 +158,6 @@ public class utils {
                 int Numerator=str1_num[0]*str2_num[0];
                 int Denominator=str1_num[1]*str2_num[1];
                 String k=GPF(Numerator,Denominator);
-                System.out.println(k);
                 return k;
             }
             if(A=='÷'){
@@ -172,10 +167,12 @@ public class utils {
                     return null;
                 }
                 String k=GPF(Numerator,Denominator);
-                System.out.println(k);
                 return k;
             }
         }
         return null;
     }
+//    public  static String adb(Expression e1,Expression e2)
+//    {}
 }
+
