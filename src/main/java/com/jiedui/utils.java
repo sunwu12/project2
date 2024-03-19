@@ -1,6 +1,27 @@
 package com.jiedui;
 
+import java.util.Random;
+
 public class utils {
+    public static String getRandomSign(int count,int maxValue){
+        char[] chars = {'+','-','×','÷'};
+        Random rand = new Random();
+        int a=rand.nextInt(maxValue);
+        int b=rand.nextInt(maxValue);
+        int result=0;
+        char sign = chars[rand.nextInt(4)];
+        switch (sign){
+            case '+':result=a+b;break;
+            case '-':result=a-b;break;
+            case '×':result=a*b;break;
+            case '÷':result=a/b;break;
+        }
+        String s=a+" "+sign+" "+b+" = "+result;
+        System.out.println(s);
+        return s;
+    }
+
+
     public static String getProperFration(String x, String y) {
         int num1 = Integer.parseInt(x);
         int num2 = Integer.parseInt(y);
@@ -28,4 +49,5 @@ public class utils {
         }
         return null;
     }
+
 }

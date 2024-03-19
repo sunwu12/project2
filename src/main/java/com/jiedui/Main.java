@@ -1,7 +1,9 @@
 package com.jiedui;
 
+import java.util.Random;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        utils.getRandomSign(1,10);
     }
 }
