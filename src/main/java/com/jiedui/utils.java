@@ -76,6 +76,32 @@ public class utils {
     /*
     将存入字符串中的分数转为能进行运算的数字
      */
+    public static int[] transformNum(String str1) {
+        Integer num1=null;
+        Integer num2=null;
+        int[]num=new int[2];
+        if (str1.contains("'")) {
+            String[] dataA1 = str1.split("['/]");
+             num1 = Integer.valueOf(dataA1[0]);
+             num2 = Integer.valueOf(dataA1[1]);
+            Integer num3 = Integer.valueOf(dataA1[2]);//真分数分母
+            int numz = num1 * num3 + num2;//真分数分子
+        } //真分数情况下
+        else if(str1.contains("/")){
+            String[] data1 = str1.split("/");
+            num1 = Integer.valueOf(data1[0]);//分子
+            num2 = Integer.valueOf(data1[1]);//分母
+        }//分数情况下
+        else{
+            String[]dataan= str1.split("/");
+            num1=Integer.valueOf(dataan[0]);//分子
+            num2=1;//分母
+        }//整数情况下
+        num[0]=num1;
+        num[1]=num2;
+        return num;
+    }
+
     /*
     与分数相关的计算
      */
@@ -85,76 +111,132 @@ public class utils {
             Integer num2 = null;
             Integer num3 = null;
             Integer num4 = null;
-            if (str1.contains("'")) {
-                String[] dataA1 = str1.split("['/]");
-                Integer numa1 = Integer.valueOf(dataA1[0]);
-                Integer numa2 = Integer.valueOf(dataA1[1]);
-                Integer numa3 = Integer.valueOf(dataA1[2]);//分母
-                int numa = numa1 * numa3 + numa2;//分子
-            } else if(str1.contains("/")){
-                String[] data1 = str1.split("/");
-                num1 = Integer.valueOf(data1[0]);//分子
-                num2 = Integer.valueOf(data1[1]);//分母
-            }
-            else{
-                String[]dataan= str1.split("/");
-                num1=Integer.valueOf(dataan[0]);//分子
-                num2=1;//分母
-            }
-            if (str2.contains("'")) {
-                String[] dataB1 = str2.split("['/]");
-                Integer numb1 = Integer.valueOf(dataB1[0]);
-                Integer numb2 = Integer.valueOf(dataB1[1]);
-                Integer numb3 = Integer.valueOf(dataB1[2]);//分母
-                int num = numb1 * numb3 + numb2;//分子
-            } else if(str2.contains("/")){
-                String[] data2 = str2.split("/");
-                num3 = Integer.valueOf(data2[0]);//分子
-                num4 = Integer.valueOf(data2[1]);//分母
-            }
-            else{
-                String[]databn=str2.split("/");
-                num3=Integer.valueOf(databn[0]);
-                num4=1;
-            }
+//            if (str1.contains("'")) {
+//                String[] dataA1 = str1.split("['/]");
+//                Integer numa1 = Integer.valueOf(dataA1[0]);
+//                Integer numa2 = Integer.valueOf(dataA1[1]);
+//                Integer numa3 = Integer.valueOf(dataA1[2]);//分母
+//                int numa = numa1 * numa3 + numa2;//分子
+//            } else if(str1.contains("/")){
+//                String[] data1 = str1.split("/");
+//                num1 = Integer.valueOf(data1[0]);//分子
+//                num2 = Integer.valueOf(data1[1]);//分母
+//            }
+//            else{
+//                String[]dataan= str1.split("/");
+//                num1=Integer.valueOf(dataan[0]);//分子
+//                num2=1;//分母
+//            }
+//            if (str2.contains("'")) {
+//                String[] dataB1 = str2.split("['/]");
+//                Integer numb1 = Integer.valueOf(dataB1[0]);
+//                Integer numb2 = Integer.valueOf(dataB1[1]);
+//                Integer numb3 = Integer.valueOf(dataB1[2]);//分母
+//                int num = numb1 * numb3 + numb2;//分子
+//            } else if(str2.contains("/")){
+//                String[] data2 = str2.split("/");
+//                num3 = Integer.valueOf(data2[0]);//分子
+//                num4 = Integer.valueOf(data2[1]);//分母
+//            }
+//            else{
+//                String[]databn=str2.split("/");
+//                num3=Integer.valueOf(databn[0]);
+//                num4=1;
+//            }
+
+            int[]str1_num;
+            int[]str2_num;
+            str1_num=transformNum(str1);
+            str2_num=transformNum(str2);
             if (A == '+') {
-                if (num2 == num4) {
-                    int Numerator = num1 + num3;
-                    int Denominator = num2;
+                if (str1_num[1] == str2_num[1]) {
+                    int Numerator = str1_num[0] + str2_num[0];
+                    int Denominator = str1_num[1];
                     String k = GPF(Numerator, Denominator);
                     System.out.println(k);
+                    return k;
                 } else {
-                    int Denominator = num2 * num4;
-                    int Numerator = num1 * num4 + num3 * num2;
+                    int Denominator = str1_num[1] * str2_num[1];
+                    int Numerator = str1_num[0] * str2_num[1] + str2_num[0] * str1_num[1];
                     String k = GPF(Numerator, Denominator);
                     System.out.println(k);
+                    return k;
                 }
             }
             if (A == '-') {
-                if (num2 == num4) {
-                    int Numerator = num1 - num3;
-                    int Denominator = num2;
+                if (str1_num[1] == str2_num[1]) {
+                    int Numerator = str1_num[0] - str1_num[0];
+                    int Denominator = str1_num[1];
                     String k = GPF(Numerator, Denominator);
                     System.out.println(k);
+                    return k;
                 } else {
-                    int Denominator = num2 * num4;
-                    int Numerator = num1 * num4 - num3 * num2;
+                    int Denominator = str1_num[1] * str2_num[1];
+                    int Numerator = str1_num[0] * str2_num[1] - str2_num[0] * str1_num[1];
                     String k = GPF(Numerator, Denominator);
                     System.out.println(k);
+                    return k;
                 }
             }
             if(A=='×'){
-                int Numerator=num1*num3;
-                int Denominator=num2*num4;
+                int Numerator=str1_num[0]*str2_num[0];
+                int Denominator=str1_num[1]*str2_num[1];
                 String k=GPF(Numerator,Denominator);
                 System.out.println(k);
+                return k;
             }
             if(A=='÷'){
-                int Numerator=num1*num4;
-                int Denominator=num2*num3;
+                int Numerator=str1_num[0]*str2_num[1];
+                int Denominator=str1_num[1]*str2_num[0];
                 String k=GPF(Numerator,Denominator);
                 System.out.println(k);
+                return k;
             }
+
+
+
+
+
+
+
+//            if (A == '+') {
+//                if (num2 == num4) {
+//                    int Numerator = num1 + num3;
+//                    int Denominator = num2;
+//                    String k = GPF(Numerator, Denominator);
+//                    System.out.println(k);
+//                } else {
+//                    int Denominator = num2 * num4;
+//                    int Numerator = num1 * num4 + num3 * num2;
+//                    String k = GPF(Numerator, Denominator);
+//                    System.out.println(k);
+//                }
+//            }
+//            if (A == '-') {
+//                if (num2 == num4) {
+//                    int Numerator = num1 - num3;
+//                    int Denominator = num2;
+//                    String k = GPF(Numerator, Denominator);
+//                    System.out.println(k);
+//                } else {
+//                    int Denominator = num2 * num4;
+//                    int Numerator = num1 * num4 - num3 * num2;
+//                    String k = GPF(Numerator, Denominator);
+//                    System.out.println(k);
+//                }
+//            }
+//            if(A=='×'){
+//                int Numerator=num1*num3;
+//                int Denominator=num2*num4;
+//                String k=GPF(Numerator,Denominator);
+//                System.out.println(k);
+//            }
+//            if(A=='÷'){
+//                int Numerator=num1*num4;
+//                int Denominator=num2*num3;
+//                String k=GPF(Numerator,Denominator);
+//                System.out.println(k);
+//            }
         }
 
         return null;
