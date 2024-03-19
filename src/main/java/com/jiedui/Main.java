@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        Expression[] es=utils.getAllExpression(10,15);
+        Expression[] es=utils.getAllExpression(5,15);
         for(Expression e:es){
             System.out.println(e);
         }
