@@ -1,6 +1,5 @@
 package com.jiedui;
 
-import java.util.Objects;
 import java.util.Random;
 
 public class utils {
@@ -44,7 +43,7 @@ public class utils {
     public static String getRandomValue(int maxValue){
         Random random=new Random();
         if(random.nextBoolean()){//生成随机真分数
-            return GPF(random.nextInt(maxValue),random.nextInt(maxValue));
+            return getFraction(random.nextInt(maxValue),random.nextInt(maxValue));
         }else return String.valueOf(random.nextInt(maxValue));//生成随机整数
     }
 
@@ -60,8 +59,8 @@ public class utils {
     }
 
 
-    //相除得真分数
-    public static String GPF(int x, int y) {
+    //转换出分数
+    public static String getFraction(int x, int y) {
         if(y==0)
         {
             return null;
@@ -95,24 +94,24 @@ public class utils {
     转换出分子和分母
      */
     public static int[] transformNum(String str1) {
-        Integer num1=null;
-        Integer num2=null;
+        int num1;
+        int num2;
         int[]num=new int[2];
         if (str1.contains("'")) {
             String[] dataA1 = str1.split("['/]");
-             Integer Anum1 = Integer.valueOf(dataA1[0]);
-             Integer Anum2 = Integer.valueOf(dataA1[1]);
-             num2 = Integer.valueOf(dataA1[2]);//真分数分母
+             int Anum1 = Integer.parseInt(dataA1[0]);
+             int Anum2 = Integer.parseInt(dataA1[1]);
+             num2 = Integer.parseInt(dataA1[2]);//真分数分母
              num1 = Anum1 * num2 + Anum2;//真分数分子
         } //真分数情况下
         else if(str1.contains("/")){
             String[] data1 = str1.split("/");
-            num1 = Integer.valueOf(data1[0]);//分子
-            num2 = Integer.valueOf(data1[1]);//分母
+            num1 = Integer.parseInt(data1[0]);//分子
+            num2 = Integer.parseInt(data1[1]);//分母
         }//分数情况下
         else{
             String[]dataan= str1.split("/");
-            num1=Integer.valueOf(dataan[0]);//分子
+            num1= Integer.parseInt(dataan[0]);//分子
             num2=1;//分母
         }//整数情况下
         num[0]=num1;
@@ -133,13 +132,11 @@ public class utils {
                 if (str1_num[1] == str2_num[1]) {
                     int Numerator = str1_num[0] + str2_num[0];
                     int Denominator = str1_num[1];
-                    String k = GPF(Numerator, Denominator);
-                    return k;
+                    return getFraction(Numerator, Denominator);
                 } else {
                     int Denominator = str1_num[1] * str2_num[1];
                     int Numerator = str1_num[0] * str2_num[1] + str2_num[0] * str1_num[1];
-                    String k = GPF(Numerator, Denominator);
-                    return k;
+                    return getFraction(Numerator, Denominator);
                 }
             }
             if (A == '-') {
@@ -149,23 +146,20 @@ public class utils {
                         return null;
                     }
                     int Denominator = str1_num[1];
-                    String k = GPF(Numerator, Denominator);
-                    return k;
+                    return getFraction(Numerator, Denominator);
                 } else {
                     int Denominator = str1_num[1] * str2_num[1];
                     int Numerator = str1_num[0] * str2_num[1] - str2_num[0] * str1_num[1];
                     if(Numerator<0){
                         return null;
                     }
-                    String k = GPF(Numerator, Denominator);
-                    return k;
+                    return getFraction(Numerator, Denominator);
                 }
             }
             if(A=='×'){
                 int Numerator=str1_num[0]*str2_num[0];
                 int Denominator=str1_num[1]*str2_num[1];
-                String k=GPF(Numerator,Denominator);
-                return k;
+                return getFraction(Numerator,Denominator);
             }
             if(A=='÷'){
                 int Numerator=str1_num[0]*str2_num[1];
@@ -173,13 +167,17 @@ public class utils {
                 if(Denominator==0){
                     return null;
                 }
-                String k=GPF(Numerator,Denominator);
-                return k;
+                return getFraction(Numerator,Denominator);
             }
         }
         return null;
     }
-//    public  static String adb(Expression e1,Expression e2)
-//    {}
+    /*
+    检查表达式是否重复
+     */
+//    public  static String checkExpression(Expression e1,Expression e2)
+//    {
+//
+//    }
 }
 
