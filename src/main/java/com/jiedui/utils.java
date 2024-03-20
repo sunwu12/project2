@@ -17,7 +17,7 @@ public class utils {
                 if((e2=Expression.splicing(e1,getExpression(maxValue,rand.nextInt(4)),signArr[rand.nextInt(4)]))
                 !=null){
                     e1=e2;
-                }else break;
+                }else if(e1.num>0)break;
             }
             es[es.length-count-1]=e1;
         }
