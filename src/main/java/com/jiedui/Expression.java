@@ -1,7 +1,7 @@
 package com.jiedui;
 
 public class Expression {
-    String expression=null;//表达式字符串
+    public String expression=null;//表达式字符串
     String value=null;//表达式的值
     char keySign=' ';//表达式的主运算符
     Expression leftE=null;//表达式的左边表达式

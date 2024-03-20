@@ -179,6 +179,15 @@ public class utils {
         return null;
     }
     /*
+    后缀表达式
+     */
+    public static void ConvertSuffixExpressions(){
+
+    }
+
+
+    /*
+    检查Expression类中的项是否重复
     符号优先级
      */
     public  static int getsignvalue(String s){
@@ -200,9 +209,6 @@ public class utils {
         }
         return 0;
     }
-    /*
-    转为中缀表达式
-     */
     public static List<String> getInfixExpression(String str){
         List<String> infixExpression=new ArrayList<>();
         int i=0;
