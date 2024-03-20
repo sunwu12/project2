@@ -12,10 +12,11 @@ public class test {
         for(Expression e:es){
             System.out.println(e);
         }
-        TxtHandle.txtRecord(es,"../../src/resources/Exercises.txt",
-                "../../src/resources/Answers.txt");
+        //TxtHandle.txtRecord(es,"../../src/resources/Exercises.txt",
+        //        "../../src/resources/Answers.txt");
         //FileUtil.appendUtf8Lines(es,"");
-        List<String> list =utils.getInfixExpression(es.get(1).expression);
+        //List<String> list =utils.getInfixExpression(es.get(1).expression);
+
         System.out.println();
     }
 
