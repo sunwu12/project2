@@ -9,5 +9,7 @@ public class test {
         for(Expression e:es){
             System.out.println(e);
         }
+        Expression expression=new Expression("15");
+        System.out.println(expression);
     }
 }

@@ -14,6 +14,11 @@ public class Expression {
         this.expression=this.value;
     }
 
+    public Expression(String value){//获取只含一个确定的数的表达式
+        this.value=value;
+        this.expression=value;
+    }
+
     //拼接两个表达式成一个
     public static Expression splicing(Expression leftE,Expression rightE,char sign){
         if(leftE==null||rightE==null)return null;
