@@ -1,9 +1,6 @@
 package com.jiedui;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 
 public class utils {
     static char[] signArr = {'+','-','×','÷'};
@@ -49,7 +46,9 @@ public class utils {
     public static String getRandomValue(int maxValue){
         Random random=new Random();
         if(random.nextBoolean()){//生成随机真分数
-            return getFraction(random.nextInt(maxValue),random.nextInt(maxValue));
+            String str=getFraction(random.nextInt(maxValue),random.nextInt(maxValue));
+            while(str==null)str=getFraction(random.nextInt(maxValue),random.nextInt(maxValue));
+            return str;
         }else return String.valueOf(random.nextInt(maxValue));//生成随机整数
     }
 
@@ -213,22 +212,28 @@ public class utils {
         List<String> infixExpression=new ArrayList<>();
         int i=0;
         String A;
+        char B;
+        String b= str.replace(" ","");
         do{
-            if(str.charAt(i)=='+'||str.charAt(i)=='-'||str.charAt(i)=='×'||str.charAt(i)=='÷')
+            if(b.charAt(i)=='+'||b.charAt(i)=='-'||b.charAt(i)=='×'||b.charAt(i)=='÷'||b.charAt(i)=='('||b.charAt(i)==')')
             {
-                infixExpression.add(""+str.charAt(i));
+                B=b.charAt(i);
+                infixExpression.add(""+b.charAt(i));
                 i++;
             }
             else{
                 A="";
-                while(i<str.length()&&str.charAt(i)>=48&&str.charAt(i)<=57)
+                while((b.charAt(i)>=48&&b.charAt(i)<=57)||b.charAt(i)=='\''||b.charAt(i)=='/')
                 {
-                    A+=str.charAt(i);
+                    A+=b.charAt(i);
                     i++;
+                    if(i>=b.length())
+                        break;
+
                 }
                 infixExpression.add(A);
             }
-        }while(i<str.length());
+        }while(i<b.length());
         return infixExpression;
     }
     /*
