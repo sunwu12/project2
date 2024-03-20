@@ -5,7 +5,9 @@ import org.junit.Test;
 public class test {
     @Test
     public void testMain(){
-        Expression expression=utils.getExpression(10,3);
-        System.out.println(expression);
+        Expression[] es=utils.getAllExpression(15,15);
+        for(Expression e:es){
+            System.out.println(e);
+        }
     }
 }

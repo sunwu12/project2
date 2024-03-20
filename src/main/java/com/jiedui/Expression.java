@@ -20,6 +20,7 @@ public class Expression {
         int newNum=leftE.num+rightE.num+1;
         if(newNum>3)return null;
         Expression newE=new Expression();
+        if((newE.value=utils.divisionFractionCalculate(leftE.value,rightE.value,sign))==null)return null;
         //添加括号
         if(sign=='×'||sign=='÷'){
             if(leftE.keySign=='+'||leftE.keySign=='-')addBrackets(leftE);
@@ -32,7 +33,6 @@ public class Expression {
         newE.keySign=sign;
         newE.num=newNum;
         newE.expression=leftE.expression+' '+sign+' '+rightE.expression;
-        newE.value= utils.divisionFractionCalculate(leftE.value,rightE.value,sign);
         return newE;
     }
 

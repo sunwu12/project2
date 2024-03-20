@@ -6,10 +6,22 @@ import java.util.Random;
 public class utils {
     static char[] signArr = {'+','-','×','÷'};
 
+    //随机生成表达式数组
     public static Expression[] getAllExpression(int count,int maxValue){
         Expression[] es = new Expression[count];
         Random rand = new Random();
-        int a=rand.nextInt(4);
+        while(count-->0){
+            Expression e1=getExpression(maxValue,rand.nextInt(4));
+            while(true){
+                Expression e2;
+                if((e2=Expression.splicing(e1,getExpression(maxValue,rand.nextInt(4)),signArr[rand.nextInt(4)]))
+                !=null){
+                    e1=e2;
+                }else break;
+            }
+            es[es.length-count-1]=e1;
+        }
+
         return es;
     }
 
@@ -22,10 +34,10 @@ public class utils {
                 char sign=signArr[rand.nextInt(4)];
                 Expression e1=new Expression(maxValue);
                 Expression e2=getExpression(maxValue,num-1);
-                if(utils.divisionFractionCalculate(e1.value,e2.value,sign)==null)continue;
-                return Expression.splicing(e1,e2,signArr[rand.nextInt(4)]);
+                Expression e3=Expression.splicing(e1,e2,sign);
+                if(e3==null)continue;
+                return e3;
             }
-
         }
     }
 
