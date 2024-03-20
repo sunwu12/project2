@@ -1,13 +1,16 @@
 package com.jiedui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 
 public class utils {
     static char[] signArr = {'+','-','×','÷'};
 
     //随机生成表达式数组
-    public static Expression[] getAllExpression(int count,int maxValue){
-        Expression[] es = new Expression[count];
+    public static List<Expression> getAllExpression(int count, int maxValue){
+        List<Expression> expressions = new ArrayList<>();
         Random rand = new Random();
         while(count-->0){
             Expression e1=getExpression(maxValue,rand.nextInt(4));
@@ -18,10 +21,10 @@ public class utils {
                     e1=e2;
                 }else if(e1.num>0)break;
             }
-            es[es.length-count-1]=e1;
+            expressions.add(e1);
         }
 
-        return es;
+        return expressions;
     }
 
     //生成一个表达式
@@ -33,7 +36,10 @@ public class utils {
                 char sign=signArr[rand.nextInt(4)];
                 Expression e1=new Expression(maxValue);
                 Expression e2=getExpression(maxValue,num-1);
-                Expression e3=Expression.splicing(e1,e2,sign);
+                Expression e3;
+                //增加随机性
+                if(rand.nextBoolean())e3=Expression.splicing(e1,e2,sign);
+                else e3=Expression.splicing(e2,e1,sign);
                 if(e3==null)continue;
                 return e3;
             }
@@ -173,11 +179,88 @@ public class utils {
         return null;
     }
     /*
-    检查表达式是否重复
+    符号优先级
      */
-//    public  static String checkExpression(Expression e1,Expression e2)
-//    {
-//
-//    }
+    public  static int getsignvalue(String s){
+        int plus =1;
+        int minus=1;
+        int times=2;
+        int divide=2;
+        if(s.equals("+")){
+            return plus;
+        }
+        if(s.equals("-")){
+            return minus;
+        }
+        if(s.equals("×")){
+            return times;
+        }
+        if(s.equals("÷")){
+            return divide;
+        }
+        return 0;
+    }
+    /*
+    转为中缀表达式
+     */
+    public static List<String> getInfixExpression(String str){
+        List<String> infixExpression=new ArrayList<>();
+        int i=0;
+        String A;
+        do{
+            if(str.charAt(i)=='+'||str.charAt(i)=='-'||str.charAt(i)=='×'||str.charAt(i)=='÷')
+            {
+                infixExpression.add(""+str.charAt(i));
+                i++;
+            }
+            else{
+                A="";
+                while(i<str.length()&&str.charAt(i)>=48&&str.charAt(i)<=57)
+                {
+                    A+=str.charAt(i);
+                    i++;
+                }
+                infixExpression.add(A);
+            }
+        }while(i<str.length());
+        return infixExpression;
+    }
+    /*
+    中缀转为后缀表达式
+     */
+    public static List<String> getPostfixExpression(List<String> infixExpression){
+        List<String> s1= new ArrayList<>();//用于存放数字
+        Stack<String> s2=new Stack<>();//用于存放运算符和符号
+        for(String str:infixExpression)
+        {
+            if(!(str.equals("+")||str.equals("-")||str.equals("×")||str.equals("÷")||str.equals("(")||str.equals(")"))){
+                s1.add(str);
+            }
+            else if(str.equals("("))
+            {
+                s2.push(str);
+            }
+            else if(str.equals(")"))
+            {
+                while(!s2.isEmpty()&&s2.peek().equals("("))
+                {
+                    s1.add(s2.pop());
+                }
+                s2.pop();
+            } else
+            {
+                while(!s2.isEmpty()&&getsignvalue(s2.peek())>=getsignvalue(str))
+                {
+                    s1.add(s2.pop());
+                }
+                s2.push(str);
+            }
+        }
+        while(!s2.isEmpty())
+        {
+            s1.add(s2.pop());
+        }
+        return s1;
+    }
 }
 

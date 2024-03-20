@@ -1,13 +1,15 @@
 package com.jiedui;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        Expression[] es=utils.getAllExpression(5,15);
-        for(Expression e:es){
-            System.out.println(e);
-        }
+        List<Expression> es=utils.getAllExpression(15,15);
+        System.out.println(es);
+        Expression expression=new Expression("15");
+        System.out.println(expression);
+        TxtHandle.txtRecord(es,null,null);
     }
 }
