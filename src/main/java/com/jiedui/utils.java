@@ -336,33 +336,105 @@ public class utils {
         return save;
     }
     /*
-    检查是否重复
+    将后缀表达式转换为字符串,为检查重复做准备
      */
-    public static void checkExpression(List<String> ostfixExpression){
+    public static String ConverPostfixExpressionToStrings(List<String> ostfixExpression){
        StringBuilder str=new StringBuilder();//存入该字符串
         List<String>num=new ArrayList<>();//用于存放数字
-        int i,j;
+        int i,j,record=0;
         String A,B;
         for(String ch:ostfixExpression)
         {
             if(!(ch.equals("+")||ch.equals("-")||ch.equals("×")||ch.equals("÷")||ch.equals("(")||ch.equals(")"))){
                 num.add(ch);
+                record++;
             }
             else{
+                if(record==ostfixExpression.size()-1)
+                {
+                    str.append(ch);
+                    break;
+                }
+                while(num.size()<2)
+                {
+                  String space="";
+                  num.add(space);
+                }
                 i=num.size()-1;
                 A = num.get(i-1);
                 B = num.get(i);
-                str.append(A);
                 str.append(ch);
+                str.append(A);
                 str.append(B);
                 for (i = num.size() - 1, j = 0; j < 2; j++) {
                     num.remove(i);
                     i--;
                 }
+                record++;
             }
         }
-        System.out.println(str);
+        return str.toString();
     }
 
+    public static void CheckDuplicates(String str1,String str2){
+        int str1num=str1.length();
+        int str2num=str2.length();
+        int i=0,str1k=0,m=0,str2k=0;
+        char[]s1=new char[str1num+1];
+        char[]s2=new char[str2num+1];
+        if(str1num<str2num){
+            i=str1num;
+        }
+        else{
+            i=str2num;
+        }
+       String []str1a=str1.split("[1234567890]");
+        String []str2a=str2.split("[1234567890]");
+        for(int j=0;j<str1a.length;j++)
+        {
+            if(!str1a[j].equals(str2a[j]))
+            {
+                System.out.println("不一样");
+                return;
+            }
+        }
+
+        for(int j=0;j<i;j++)
+        {
+            if(str1.charAt(j)=='+'||str1.charAt(j)=='-'||str1.charAt(j)=='×'||str1.charAt(j)=='÷'){
+
+                m=j;
+                if(j==i-1){
+                    break;
+                }
+                for(int p=0;p<2;p++) {
+                    s1[str1k] = str1.charAt(m + 1);
+                    str1k++;
+                    m++;
+                }
+            }
+            if(str2.charAt(j)=='+'||str2.charAt(j)=='-'||str2.charAt(j)=='×'||str2.charAt(j)=='÷'){
+                m=j;
+                if(j==i-1){
+                    break;
+                }
+                for(int p=0;p<2;p++) {
+                    s2[str2k] = str2.charAt(m + 1);
+                    str2k++;
+                    m++;
+                }
+            }
+        }
+        for(int j=0;j<i;j=j+2){
+            int sum1=0,sum2=0;;
+           sum1+=(s1[j]-'0')+(s1[j+1]-'0');
+           sum2+=(s2[j]-'0')+(s2[j+1]-'0');
+           if(sum1!=sum2){
+               System.out.println("不一样");
+               return;
+           }
+        }
+        System.out.println("一样");
+    }
 }
 
