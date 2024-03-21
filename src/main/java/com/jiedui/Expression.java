@@ -1,5 +1,7 @@
 package com.jiedui;
 
+import java.util.Random;
+
 public class Expression {
     public String expression=null;//表达式字符串
     String value=null;//表达式的值
@@ -10,13 +12,22 @@ public class Expression {
 
     public Expression(){}
     public Expression(int maxValue){//获取只含一个随机的数的表达式
-        this.value=utils.getRandomValue(maxValue);
+        this.value=getRandomValue(maxValue);
         this.expression=this.value;
     }
 
     public Expression(String value){//获取只含一个确定的数的表达式
         this.value=value;
         this.expression=value;
+    }
+
+    public static String getRandomValue(int maxValue){
+        Random random=new Random();
+        if(random.nextBoolean()){//生成随机真分数
+            String str=utils.getFraction(random.nextInt(maxValue),random.nextInt(maxValue));
+            while(str==null)str=utils.getFraction(random.nextInt(maxValue),random.nextInt(maxValue));
+            return str;
+        }else return String.valueOf(random.nextInt(maxValue));//生成随机整数
     }
 
     //拼接两个表达式成一个
