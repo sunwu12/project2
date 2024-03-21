@@ -43,15 +43,6 @@ public class utils {
         }
     }
 
-    public static String getRandomValue(int maxValue){
-        Random random=new Random();
-        if(random.nextBoolean()){//生成随机真分数
-            String str=getFraction(random.nextInt(maxValue),random.nextInt(maxValue));
-            while(str==null)str=getFraction(random.nextInt(maxValue),random.nextInt(maxValue));
-            return str;
-        }else return String.valueOf(random.nextInt(maxValue));//生成随机整数
-    }
-
 
     /*
     计算公约数用于约分
