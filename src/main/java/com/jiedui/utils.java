@@ -177,7 +177,6 @@ public class utils {
 
 
     /*
-    检查Expression类中的项是否重复
     符号优先级
      */
     public  static int getsignvalue(String s){
@@ -199,6 +198,9 @@ public class utils {
         }
         return 0;
     }
+    /*
+    将字符串转换为中缀表达式存入到集合中，为转换为后缀表达式做准备
+     */
     public static List<String> getInfixExpression(String str){
         List<String> infixExpression=new ArrayList<>();
         int i=0;
@@ -228,7 +230,7 @@ public class utils {
         return infixExpression;
     }
     /*
-    中缀转为后缀表达式
+    中缀转为后缀表达式，意义是去除括号
      */
     public static List<String> getPostfixExpression(List<String> infixExpression){
         List<String> s1= new ArrayList<>();//用于存放数字
@@ -268,14 +270,98 @@ public class utils {
         }
         return s1;
     }
-    public static String PWgetExpression(List<String> infixExpression)
-    {
-        StringBuilder Astr=new StringBuilder();
-        for(String str:infixExpression)
+
+    /*
+     将给定的字符串表达式进行计算
+     */
+    public static String cal(List<String> ostfixExpression){
+        List<String>num=new ArrayList<>();//用于存放数字
+        String save=null,A,B;
+        int i,j;
+        for(String ch:ostfixExpression)
         {
-            Astr.append(str);
+            if(!(ch.equals("+")||ch.equals("-")||ch.equals("×")||ch.equals("÷")||ch.equals("(")||ch.equals(")"))){
+                num.add(ch);
+            }
+            else
+            {
+                switch (ch) {
+                    case "+":
+                        i = (num.size() - 1);
+                        A = num.get(i);
+                        B = num.get(i - 1);
+                        for (i = num.size() - 1, j = 0; j < 2; j++) {
+                            num.remove(i);
+                            i--;
+                        }
+                        save = divisionFractionCalculate(A, B, '+');
+                        num.add(save);
+                        break;
+                    case "-":
+                        i = (num.size() - 1);
+                        A = num.get(i - 1);
+                        B = num.get(i);
+                        for (i = num.size() - 1, j = 0; j < 2; j++) {
+                            num.remove(i);
+                            i--;
+                        }
+                        save = divisionFractionCalculate(A, B, '-');
+                        num.add(save);
+                        break;
+                    case "×":
+                        i = (num.size() - 1);
+                        A = num.get(i);
+                        B = num.get(i - 1);
+                        for (i = num.size() - 1, j = 0; j < 2; j++) {
+                            num.remove(i);
+                            i--;
+                        }
+                        save = divisionFractionCalculate(A, B, '×');
+                        num.add(save);
+                        break;
+                    case "÷":
+                        i = (num.size() - 1);
+                        A = num.get(i - 1);
+                        B = num.get(i);
+                        for (i = num.size() - 1, j = 0; j < 2; j++) {
+                            num.remove(i);
+                            i--;
+                        }
+                        save = divisionFractionCalculate(A, B, '÷');
+                        num.add(save);
+                        break;
+                }
+            }
         }
-        return Astr.toString();
+        return save;
+    }
+    /*
+    检查是否重复
+     */
+    public static void checkExpression(List<String> ostfixExpression){
+       StringBuilder str=new StringBuilder();//存入该字符串
+        List<String>num=new ArrayList<>();//用于存放数字
+        int i,j;
+        String A,B;
+        for(String ch:ostfixExpression)
+        {
+            if(!(ch.equals("+")||ch.equals("-")||ch.equals("×")||ch.equals("÷")||ch.equals("(")||ch.equals(")"))){
+                num.add(ch);
+            }
+            else{
+                i=num.size()-1;
+                A = num.get(i-1);
+                B = num.get(i);
+                str.append(A);
+                str.append(ch);
+                str.append(B);
+                for (i = num.size() - 1, j = 0; j < 2; j++) {
+                    num.remove(i);
+                    i--;
+                }
+            }
+        }
+        System.out.println(str);
     }
 
 }
