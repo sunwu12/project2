@@ -253,11 +253,15 @@ public class utils {
             }
             else if(str.equals(")"))
             {
-                while(!s2.isEmpty()&&s2.peek().equals("("))
+                while(!s2.peek().equals("("))
                 {
                     s1.add(s2.pop());
+                    if(s2.isEmpty())
+                        break;
                 }
-                s2.pop();
+                if(!s2.isEmpty()) {
+                    s2.pop();
+                }
             } else
             {
                 while(!s2.isEmpty()&&getsignvalue(s2.peek())>=getsignvalue(str))
@@ -273,5 +277,15 @@ public class utils {
         }
         return s1;
     }
+    public static String PWgetExpression(List<String> infixExpression)
+    {
+        StringBuilder Astr=new StringBuilder();
+        for(String str:infixExpression)
+        {
+            Astr.append(str);
+        }
+        return Astr.toString();
+    }
+
 }
 
