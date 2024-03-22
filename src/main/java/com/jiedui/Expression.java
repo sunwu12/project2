@@ -6,8 +6,6 @@ public class Expression extends Throwable {
     public String expression=null;//表达式字符串
     String value=null;//表达式的值
     char keySign=' ';//表达式的主运算符
-    Expression leftE=null;//表达式的左边表达式
-    Expression rightE=null;//表达式的右边表达式
     int num=0;//表达式中含有几个运算符
 
     public Expression(){}
@@ -44,8 +42,6 @@ public class Expression extends Throwable {
         }
         if(sign=='÷'&&(rightE.keySign=='÷'||rightE.keySign=='×'))addBrackets(rightE);
         if(sign=='-'&&(rightE.keySign=='+'||rightE.keySign=='-'))addBrackets(rightE);
-        newE.leftE=leftE;
-        newE.rightE=rightE;
         newE.keySign=sign;
         newE.num=newNum;
         newE.expression=leftE.expression+' '+sign+' '+rightE.expression;

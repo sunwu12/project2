@@ -225,7 +225,8 @@ public class utils {
     /*
     中缀转为后缀表达式，意义是去除括号
      */
-    public static List<String> getPostfixExpression(List<String> infixExpression){
+    public static List<String> getPostfixExpression(String expression){
+        List<String> infixExpression=getInfixExpression(expression);
         List<String> s1= new ArrayList<>();//用于存放数字
         Stack<String> s2=new Stack<>();//用于存放运算符和符号
         for(String str:infixExpression)
@@ -267,7 +268,8 @@ public class utils {
     /*
      将给定的字符串表达式进行计算
      */
-    public static String cal(List<String> postfixExpression){
+    public static String cal(String expression){
+        List<String> postfixExpression=getPostfixExpression(expression);
         String[] sinList=new String[2];
         do{
             postfixExpression=handleList(postfixExpression,sinList);
@@ -280,9 +282,11 @@ public class utils {
     }
 
     //判断两个后缀表达式是否重复
-    public static Boolean checkDuplicate(List<String> e1, List<String> e2) throws Exception {
+    public static Boolean checkDuplicate(String expression1, String expression2) {
+        List<String> e1=getInfixExpression(expression1);
+        List<String> e2=getInfixExpression(expression2);
         if(e1.size()!=e2.size())return false;
-        if(!Objects.equals(cal(e1), cal(e2)))return false;
+        if(!Objects.equals(cal(expression1), cal(expression2)))return false;
         String[] sinList1=new String[2];
         String[] sinList2=new String[2];
         do{
@@ -291,7 +295,7 @@ public class utils {
             if(!Arrays.equals(sinList1, sinList2))return false;
             System.out.println(e1);
             if(e1==null||e2==null){
-                return null;
+               break;
             }
         } while(e1.size()!=1);
         return true;
