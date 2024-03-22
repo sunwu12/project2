@@ -1,6 +1,8 @@
 package com.jiedui;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class utils {
     static char[] signArr = {'+','-','×','÷'};
@@ -168,13 +170,6 @@ public class utils {
         }
         return null;
     }
-    /*
-    后缀表达式
-     */
-    public static void ConvertSuffixExpressions(){
-
-    }
-
 
     /*
     符号优先级
@@ -205,12 +200,10 @@ public class utils {
         List<String> infixExpression=new ArrayList<>();
         int i=0;
         String A;
-        char B;
         String b= str.replace(" ","");
         do{
             if(b.charAt(i)=='+'||b.charAt(i)=='-'||b.charAt(i)=='×'||b.charAt(i)=='÷'||b.charAt(i)=='('||b.charAt(i)==')')
             {
-                B=b.charAt(i);
                 infixExpression.add(""+b.charAt(i));
                 i++;
             }
@@ -274,201 +267,60 @@ public class utils {
     /*
      将给定的字符串表达式进行计算
      */
-    public static String cal(List<String> ostfixExpression){
-        List<String>num=new ArrayList<>();//用于存放数字
-        String save=null,A,B;
-        int i,j;
-        for(String ch:ostfixExpression)
-        {
-            if(!(ch.equals("+")||ch.equals("-")||ch.equals("×")||ch.equals("÷")||ch.equals("(")||ch.equals(")"))){
-                num.add(ch);
+    public static String cal(List<String> postfixExpression){
+        int i=0,size=postfixExpression.size();
+        while (i<size) {
+            String str= postfixExpression.get(i);
+            Pattern pattern = Pattern.compile("[+×÷-]");
+            Matcher matcher = pattern.matcher(str);
+            if (matcher.find()) {
+                char sign=str.charAt(0);
+                postfixExpression=handleList(postfixExpression,i,sign);
+                i-=2;
+                size= postfixExpression.size();
             }
-            else
-            {
-                switch (ch) {
-                    case "+":
-                        i = (num.size() - 1);
-                        A = num.get(i);
-                        B = num.get(i - 1);
-                        for (i = num.size() - 1, j = 0; j < 2; j++) {
-                            num.remove(i);
-                            i--;
-                        }
-                        save = divisionFractionCalculate(A, B, '+');
-                        num.add(save);
-                        break;
-                    case "-":
-                        i = (num.size() - 1);
-                        A = num.get(i - 1);
-                        B = num.get(i);
-                        for (i = num.size() - 1, j = 0; j < 2; j++) {
-                            num.remove(i);
-                            i--;
-                        }
-                        save = divisionFractionCalculate(A, B, '-');
-                        num.add(save);
-                        break;
-                    case "×":
-                        i = (num.size() - 1);
-                        A = num.get(i);
-                        B = num.get(i - 1);
-                        for (i = num.size() - 1, j = 0; j < 2; j++) {
-                            num.remove(i);
-                            i--;
-                        }
-                        save = divisionFractionCalculate(A, B, '×');
-                        num.add(save);
-                        break;
-                    case "÷":
-                        i = (num.size() - 1);
-                        A = num.get(i - 1);
-                        B = num.get(i);
-                        for (i = num.size() - 1, j = 0; j < 2; j++) {
-                            num.remove(i);
-                            i--;
-                        }
-                        save = divisionFractionCalculate(A, B, '÷');
-                        num.add(save);
-                        break;
-                }
-            }
+            i++;
         }
-        return save;
+        return postfixExpression.get(0);
     }
-    /*
-    将后缀表达式转换为字符串,为检查重复做准备
-     */
-//    public static String[] ConverPostfixExpressionToStrings(List<String> ostfixExpression){
-//       String []str=new String[ostfixExpression.size()];
-//        List<String>num=new ArrayList<>();//用于存放数字
-//        int i,j,record=0,position=0;
-//        String A,B;
-//        for(String ch:ostfixExpression)
-//        {
-//            if(!(ch.equals("+")||ch.equals("-")||ch.equals("×")||ch.equals("÷")||ch.equals("(")||ch.equals(")"))){
-//                num.add(ch);
-//                record++;
-//            }
-//            else{
-//                if(record==ostfixExpression.size()-1)
-//                {
-//                    if(!num.isEmpty()){
-//                        str[--record]=ch;
-//                        str[++record]=num.get(0);
-//                        break;
-//                    }
-//                    str[record]=ch;
-//                    break;
-//                }
-//                while(num.size()<2)
-//                {
-//                  String space="";
-//                  num.add(space);
-//                }
-//                i=num.size()-1;
-//                A = num.get(i-1);
-//                B = num.get(i);
-//                str[position]=ch;
-//                position=position+1;
-//                str[position]=A;
-//                position=position+1;
-//                str[position]=B;
-//                position=position+1;
-//                for (i = num.size() - 1, j = 0; j < 2; j++) {
-//                    num.remove(i);
-//                    i--;
-//                }
-//                record++;
-//            }
-//        }
-//        return str;
-//    }
-//
-//    public static void CheckDuplicates(String[] str1,String[] str2){
-//        int str1num=str1.length;
-//        int str2num=str2.length;
-//        int i=0,str1k=0,m=0,str2k=0,position=0;
-//        String[]s1=new String[str1num];
-//        String[]s2=new String[str2num];
-//        if(str1num<str2num){
-//            i=str1num;
-//        }
-//        else{
-//            i=str2num;
-//        }
-//        for(int j=0;j<i;j++)
-//        {
-//            if(str1[j].equals("+")||str1[j].equals("-")||str1[j].equals("×")||str1[j].equals("÷")){
-//
-//                m=j;
-//                if(j==i-1){
-//                    break;
-//                }
-//                for(int p=0;p<2;p++) {
-//                    if(m+1==str1.length){
-//                        break;
-//                    }
-//                    s1[str1k] = str1[m+1];
-//                    str1k++;
-//                    m++;
-//                }
-//            }
-//            if(str2[j].equals("+")||str2[j].equals("-")||str2[j].equals("×")||str2[j].equals("÷")){
-//                m=j;
-//                if(j==i-1){
-//                    break;
-//                }
-//                for(int p=0;p<2;p++) {
-//                    if(m+1==str2.length){
-//                        break;
-//                    }
-//                    s2[str2k] = str2[m+1];
-//                    str2k++;
-//                    m++;
-//                }
-//            }
-//        }
-//        for(int j=0;j<i;j=j+2){
-//            int sum1=0,sum2=0,times1=1,times2=1;
-//           sum1+=Integer.parseInt(s1[j])+Integer.parseInt(s1[j+1]);
-//           sum2+=Integer.parseInt(s2[j])+Integer.parseInt(s2[j+1]);
-//           times1=Integer.parseInt(s1[j])*Integer.parseInt(s1[j+1]);
-//           times2=Integer.parseInt(s2[j])*Integer.parseInt(s2[j+1]);
-//           if(sum1!=sum2||times1!=times2){
-//               System.out.println("不一样");
-//               return;
-//           }
-//        }
-//        System.out.println("一样");
-//    }
-    public static void check(List<String> str1,List<String>str2){
-        Stack<String> str1check=new Stack<>();
-        Stack<String> str2check=new Stack<>();
 
-        for(String ch1:str1){
-
-            if(ch1.equals("+")||ch1.equals("-")||ch1.equals("×")||ch1.equals("÷")){
-                for(String ch2:str2){
-                    if(ch2.equals("+")||ch2.equals("-")||ch2.equals("×")||ch2.equals("÷")){
-                        int sum1=0,sum2=0,time1=1,time2=1;
-                        int sum1second=Integer.parseInt(str1check.pop());
-                        int sum1first=Integer.parseInt(str1check.pop());
-                        sum1=sum1first+sum1second;
-                        time1=sum1first*sum1second;
-                        int sum2second=Integer.parseInt(str2check.pop());
-                        int sum2first=Integer.parseInt(str2check.pop());
-                        sum2=sum2first+sum2second;
-                        time2=sum2first+sum2second;
-                    }else{
-                        str2check.push(ch2);
-                    }
-                }
-            }else{
-                str1check.push(ch1);
+    public static Boolean checkDuplicate(List<String> e1, List<String> e2){
+        if(e1.size()!=e2.size())return false;
+        if(!Objects.equals(cal(e1), cal(e2)))return false;
+        int i=0,size=e1.size();
+        while (i<size) {
+            String str1= e1.get(i);
+            String str2= e2.get(i);
+            Pattern pattern = Pattern.compile("[+×÷-]");
+            Matcher matcher1 = pattern.matcher(str1);
+            Matcher matcher2 = pattern.matcher(str2);
+            if (matcher1.find()&&matcher2.find()) {
+                char sign1=str1.charAt(0);
+                char sign2=str2.charAt(0);
+                if(sign1!=sign2)return false;
+                String first1=e1.get(i-2);
+                String second1= e1.get(i-1);
+                String first2=e2.get(i-2);
+                String second2=e2.get(i-1);
+                if(!Objects.equals(first1, first2) && !Objects.equals(first1, second2))return false;
+                if(!Objects.equals(second1, first2) && !Objects.equals(second1, second2))return false;
+                e1=handleList(e1,i,sign1);
+                e2=handleList(e2,i,sign1);
+                i-=2;
+                size=e1.size();
             }
-
+            i++;
         }
+        return true;
+    }
 
+    private static List<String> handleList(List<String> list,int index,char sign){
+        List<String> newList = new ArrayList<>(list);
+        String newVal=utils.divisionFractionCalculate(newList.get(index-2),newList.get(index-1), sign);
+        newList.set(index-2,newVal);
+        newList.remove(index-1);
+        newList.remove(index-1);
+        return newList;
     }
 
 }
