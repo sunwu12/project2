@@ -268,60 +268,58 @@ public class utils {
      将给定的字符串表达式进行计算
      */
     public static String cal(List<String> postfixExpression){
-        int i=0,size=postfixExpression.size();
-        while (i<size) {
-            String str= postfixExpression.get(i);
-            Pattern pattern = Pattern.compile("[+×÷-]");
-            Matcher matcher = pattern.matcher(str);
-            if (matcher.find()) {
-                char sign=str.charAt(0);
-                postfixExpression=handleList(postfixExpression,i,sign);
-                i-=2;
-                size= postfixExpression.size();
-            }
-            i++;
+        String[] sinList=new String[2];
+        do{
+            postfixExpression=handleList(postfixExpression,sinList);
+            if(postfixExpression==null)break;
+        } while(postfixExpression.size()!=1);
+        if (postfixExpression != null) {
+            return postfixExpression.get(0);
         }
-        return postfixExpression.get(0);
+        return null;
     }
 
-    public static Boolean checkDuplicate(List<String> e1, List<String> e2){
+    //判断两个后缀表达式是否重复
+    public static Boolean checkDuplicate(List<String> e1, List<String> e2) throws Exception {
         if(e1.size()!=e2.size())return false;
         if(!Objects.equals(cal(e1), cal(e2)))return false;
-        int i=0,size=e1.size();
-        while (i<size) {
-            String str1= e1.get(i);
-            String str2= e2.get(i);
-            Pattern pattern = Pattern.compile("[+×÷-]");
-            Matcher matcher1 = pattern.matcher(str1);
-            Matcher matcher2 = pattern.matcher(str2);
-            if (matcher1.find()&&matcher2.find()) {
-                char sign1=str1.charAt(0);
-                char sign2=str2.charAt(0);
-                if(sign1!=sign2)return false;
-                String first1=e1.get(i-2);
-                String second1= e1.get(i-1);
-                String first2=e2.get(i-2);
-                String second2=e2.get(i-1);
-                if(!Objects.equals(first1, first2) && !Objects.equals(first1, second2))return false;
-                if(!Objects.equals(second1, first2) && !Objects.equals(second1, second2))return false;
-                e1=handleList(e1,i,sign1);
-                e2=handleList(e2,i,sign1);
-                i-=2;
-                size=e1.size();
+        String[] sinList1=new String[2];
+        String[] sinList2=new String[2];
+        do{
+            e1=handleList(e1,sinList1);
+            e2=handleList(e2,sinList2);
+            if(!Arrays.equals(sinList1, sinList2))return false;
+            System.out.println(e1);
+            if(e1==null||e2==null){
+                return null;
             }
-            i++;
-        }
+        } while(e1.size()!=1);
         return true;
     }
 
-    private static List<String> handleList(List<String> list,int index,char sign){
-        List<String> newList = new ArrayList<>(list);
-        String newVal=utils.divisionFractionCalculate(newList.get(index-2),newList.get(index-1), sign);
-        newList.set(index-2,newVal);
-        newList.remove(index-1);
-        newList.remove(index-1);
-        return newList;
+    //处理后缀表达式集合
+    private static List<String> handleList(List<String> list,String[] sinList){
+        int i=0;
+        Pattern pattern = Pattern.compile("[+×÷-]");
+        while (i<list.size()) {
+            String str= list.get(i);
+            Matcher matcher = pattern.matcher(str);
+            if (matcher.find()) {
+                char sign=str.charAt(0);
+                List<String> newList = new ArrayList<>(list);
+                String newVal=utils.divisionFractionCalculate(newList.get(i-2),newList.get(i-1), sign);
+                if(newVal==null)return null;
+                sinList[0]=newList.get(i-2);
+                sinList[1]=newList.get(i-1);
+                Arrays.sort(sinList);
+                newList.set(i-2,newVal);
+                newList.remove(i-1);
+                newList.remove(i-1);
+                return newList;
+            }
+            i++;
+        }
+        return null;
     }
-
 }
 

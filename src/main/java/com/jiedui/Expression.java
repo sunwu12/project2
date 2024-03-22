@@ -2,7 +2,7 @@ package com.jiedui;
 
 import java.util.Random;
 
-public class Expression {
+public class Expression extends Throwable {
     public String expression=null;//表达式字符串
     String value=null;//表达式的值
     char keySign=' ';//表达式的主运算符
