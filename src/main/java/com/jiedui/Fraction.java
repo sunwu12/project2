@@ -2,7 +2,6 @@ package com.jiedui;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 //分数类
 public class Fraction {

@@ -2,8 +2,6 @@ package com.jiedui;
 
 import cn.hutool.core.io.FileUtil;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +13,10 @@ public class TxtHandle {
     public static void txtRecord(List<Expression> es){
             AtomicInteger i = new AtomicInteger();
             AtomicInteger j = new AtomicInteger();
-            String subjectPath="src/resources/Exercises.txt";
-            String answerPath="src/resources/Answers.txt";
+//            String subjectPath="src/resources/Exercises_test01.txt";
+//            String answerPath="src/resources/Answers_test01.txt";
+            String subjectPath= "Exercises.txt";
+            String answerPath= "Answers.txt";
             //读取文件中最大序号
             List<String> a=FileUtil.readUtf8Lines(subjectPath);
             if(a.isEmpty()) {
@@ -66,7 +66,7 @@ public class TxtHandle {
                 if(sb2.charAt(sb2.length()-1)==',')sb2.deleteCharAt(sb2.length()-1);
                 sb1.append(")");
                 sb2.append(")");
-                String gradePath="src/resources/Answers.txt";
+                String gradePath="src/resources/Answers_test01.txt";
                 FileUtil.writeUtf8Lines(new ArrayList<>(List.of(new String[]{sb1.toString(),sb2.toString()})), gradePath);
             }
         }
