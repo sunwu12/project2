@@ -7,13 +7,33 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(args));
-        System.out.println("success");
-        Expression e1=Expression.splicing(new Expression("5"),new Expression("3"),'+');
-        Expression e2=Expression.splicing(new Expression("3"),new Expression("5"),'+');
-        System.out.println(e1.equals(e2));
-        List<Expression> list=new ArrayList<>();
-        list.add(e1);
-        System.out.println(list.contains(e1));
+                int count=0,maxValue=0;
+        String subjectPath=null,answerPath=null;
+        for(int i=0;i<args.length;i++){
+            switch (args[i]) {
+                case "-n":
+                    count = Integer.parseInt(args[i + 1]);
+                    break;
+                case "-r":
+                    maxValue = Integer.parseInt(args[i + 1]);
+                    break;
+                case "-e":
+                    subjectPath = args[i + 1];
+
+                    break;
+                case "-a":
+                    answerPath = args[i + 1];
+                    break;
+            }
+        }
+        List<Expression> es = utils.getAllExpression(count, maxValue);
+        for (Expression e : es) {
+            System.out.println(e);
+        }
+        if(count!=0&&maxValue!=0) {
+            TxtHandle.txtRecord(es);
+        }else if(subjectPath!=null&&answerPath!=null){
+            TxtHandle.txtJudge(subjectPath,answerPath);
+        }
     }
 }
