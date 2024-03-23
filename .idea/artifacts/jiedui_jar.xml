@@ -3,12 +3,12 @@
     <output-path>$PROJECT_DIR$/out/artifacts/jiedui_jar</output-path>
     <root id="archive" name="jiedui.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="jiedui" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../tool/apache-maven-3.6.2/maven_req/cn/hutool/hutool-all/5.4.2/hutool-all-5.4.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../tool/apache-maven-3.6.2/maven_req/junit/junit/4.13.2/junit-4.13.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../tool/apache-maven-3.6.2/maven_req/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/cn/hutool/hutool-all/5.8.25/hutool-all-5.8.25.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/junit/junit/4.13.2/junit-4.13.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
