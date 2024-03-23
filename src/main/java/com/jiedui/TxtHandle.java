@@ -17,6 +17,7 @@ public class TxtHandle {
             AtomicInteger j = new AtomicInteger();
             String subjectPath="src/resources/Exercises.txt";
             String answerPath="src/resources/Answers.txt";
+            //读取文件中最大序号
             List<String> a=FileUtil.readUtf8Lines(subjectPath);
             if(a.isEmpty()) {
                 i.set(1);
@@ -27,6 +28,7 @@ public class TxtHandle {
                 j.set(Integer.parseInt(str.split("\\.")[0])+1);
             }
 
+            //写入带有序号的表达式
             List<String> subjectList=es.stream().map(e->i.getAndIncrement()+". "+e.expression+" = ").collect(Collectors.toList());
             List<String> answerList=es.stream().map(e->j.getAndIncrement()+". "+e.value).collect(Collectors.toList());
 
@@ -34,19 +36,22 @@ public class TxtHandle {
             FileUtil.appendUtf8Lines(answerList,answerPath);
         }
 
-        public static void txtJudge(String subjectPath,String answerPath)throws IOException {
+        public static void txtJudge(String subjectPath,String answerPath)throws Exception {
                 List<String> subjectList=FileUtil.readUtf8Lines(subjectPath);
                 List<String> anwerList=FileUtil.readUtf8Lines(answerPath);
+                //将读取的表达式中的等于号去掉
                 List<String> expList=subjectList.stream().map(s->s.replace(" =","")
                         .split("^\\d+\\.")[1]).toList();
                 List<String> valList=anwerList.stream().map(s->s.replace(" =","")
                         .split("^\\d+\\.")[1].trim()).toList();
                 int[] gradeList=new int[subjectList.size()];
                 for(int i=0;i<subjectList.size();i++){
+                    //计算正确则为1，反之为0
                     gradeList[i]= Objects.equals(utils.cal(expList.get(i)), valList.get(i)) ?1:0;
                 }
                 StringBuilder sb1=new StringBuilder();
                 StringBuilder sb2=new StringBuilder();
+                //根据1，0的个数判断题目正确个数
                 long corNum=Arrays.stream(gradeList).filter(i->i==1).count();
                 long wroNum=Arrays.stream(gradeList).filter(i->i==0).count();
                 sb1.append("Correct: ").append(corNum).append("(");

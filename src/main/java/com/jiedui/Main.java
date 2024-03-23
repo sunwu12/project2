@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        int count = 0, maxValue = 0;
+        int count = -1, maxValue = -1;
         String subjectPath = null, answerPath = null;
         for (int i = 0; i < args.length; i++) {
             try{
@@ -23,18 +23,21 @@ public class Main {
             }
 
         }
-        List<Expression> es = utils.getAllExpression(count, maxValue);
-        for (Expression e : es) {
-            System.out.println(e);
-        }
-        if(count<=0) System.out.println("输入的题目个数不能小于1");
-        else if(maxValue<3) System.out.println("输入的最大值不能小于3");
         //将表达式集合写入题目文件和答案文件中
-        TxtHandle.txtRecord(es);
+        if(count!=-1&&maxValue!=-1) {
+            if(count<=0) System.out.println("输入的题目个数不能小于1");
+            else if(maxValue<3) System.out.println("输入的最大值不能小于3");
+            else {
+                List<Expression> es = utils.getAllExpression(count, maxValue);
+                TxtHandle.txtRecord(es);
+            }
+        }else if(count!=-1||maxValue!=-1)System.out.println("请输入正确的格式！");
         //根据输入的文件判断表达式正确数量并写入grade文件中
         try {
-            TxtHandle.txtJudge(subjectPath, answerPath);
-        } catch (IOException e) {
+            if(subjectPath!=null&&answerPath!=null){
+                TxtHandle.txtJudge(subjectPath, answerPath);
+            }else if(subjectPath!=null||answerPath!=null) System.out.println("请输入正确的格式！");
+        } catch (Exception e) {
             System.out.println("文件打开失败！请重新选择文件");
         }
 

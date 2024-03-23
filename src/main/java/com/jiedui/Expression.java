@@ -7,16 +7,12 @@ public class Expression {
     public String value=null;//表达式的值
     char keySign=' ';//表达式的主运算符
     int num=0;//表达式中含有几个运算符
+    int maxNum=3;//最大运算符个数
 
     public Expression(){}
     public Expression(int maxValue){//获取只含一个随机的数的表达式
         this.value=getRandomValue(maxValue);
         this.expression=this.value;
-    }
-
-    public Expression(String value){//获取只含一个确定的数的表达式
-        this.value=value;
-        this.expression=value;
     }
 
     //生成随机值
@@ -33,9 +29,9 @@ public class Expression {
     public static Expression splicing(Expression leftE,Expression rightE,char sign){
         if(leftE==null||rightE==null)return null;
         int newNum=leftE.num+rightE.num+1;
-        //运算符个数超过3个
-        if(newNum>3)return null;
         Expression newE=new Expression();
+        //运算符个数超过3个
+        if(newNum> newE.maxNum)return null;
         if((newE.value=Fraction.divisionFractionCalculate(leftE.value,rightE.value,sign))==null)return null;
         //添加括号
         if(sign=='×'||sign=='÷'){
@@ -64,6 +60,7 @@ public class Expression {
                 '}';
     }
 
+    //重写判断表达式相等
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

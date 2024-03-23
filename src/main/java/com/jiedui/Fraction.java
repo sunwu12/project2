@@ -8,13 +8,13 @@ import java.util.stream.Collectors;
 public class Fraction {
     public int numerator;//分子
     public int denominator;//分母
-    public String value;//分数的表示形式
+    public String value;//分数的值
 
     public Fraction(String str) {
         //分割
         String[] arr=str.split("['/]");
         //字符串转成数字
-        List<Integer> list= Arrays.stream(arr).map(Integer::parseInt).collect(Collectors.toList());
+        List<Integer> list= Arrays.stream(arr).map(Integer::parseInt).toList();
         int size=list.size();
         //根据真分数情况计算分子分母
         this.denominator=size>1? list.get(size-1) :1;
