@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 
 public class TxtHandle {
     public static void txtRecord(List<Expression> es){
-        String subjectPath="../../src/resources/Exercises.txt";
-        String answerPath="../../src/resources/Answers.txt";
+        String subjectPath="D:\\codes\\jiedui\\src\\resources\\Exercises.txt";
+        String answerPath="D:\\codes\\jiedui\\src\\resources\\Answers.txt";
         AtomicInteger i = new AtomicInteger();
         AtomicInteger j = new AtomicInteger();
         List<String> a=FileUtil.readUtf8Lines(subjectPath);
@@ -59,7 +59,7 @@ public class TxtHandle {
         if(sb2.charAt(sb2.length()-1)==',')sb2.deleteCharAt(sb2.length()-1);
         sb1.append(")");
         sb2.append(")");
-        String gradePath="../../src/resources/Grade.txt";
+        String gradePath="D:\\codes\\jiedui\\src\\resources\\Grade.txt";
         FileUtil.writeUtf8Lines(new ArrayList<>(List.of(new String[]{sb1.toString(),sb2.toString()})), gradePath);
     }
 }
