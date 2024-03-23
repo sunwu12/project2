@@ -10,7 +10,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class TxtHandle {
-    public static void txtRecord(List<Expression> es, String subjectPath,String answerPath){
+    public static void txtRecord(List<Expression> es){
+        String subjectPath="../../src/resources/Exercises.txt";
+        String answerPath="../../src/resources/Answers.txt";
         AtomicInteger i = new AtomicInteger();
         AtomicInteger j = new AtomicInteger();
         List<String> a=FileUtil.readUtf8Lines(subjectPath);
@@ -30,7 +32,7 @@ public class TxtHandle {
         FileUtil.appendUtf8Lines(answerList,answerPath);
     }
 
-    public static void txtJudge(String subjectPath,String answerPath,String gradePath){
+    public static void txtJudge(String subjectPath,String answerPath){
         List<String> subjectList=FileUtil.readUtf8Lines(subjectPath);
         List<String> anwerList=FileUtil.readUtf8Lines(answerPath);
         List<String> expList=subjectList.stream().map(s->s.replace(" =","")
@@ -57,6 +59,7 @@ public class TxtHandle {
         if(sb2.charAt(sb2.length()-1)==',')sb2.deleteCharAt(sb2.length()-1);
         sb1.append(")");
         sb2.append(")");
+        String gradePath="../../src/resources/Grade.txt";
         FileUtil.writeUtf8Lines(new ArrayList<>(List.of(new String[]{sb1.toString(),sb2.toString()})), gradePath);
     }
 }

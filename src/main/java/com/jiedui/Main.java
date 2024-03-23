@@ -1,21 +1,19 @@
 package com.jiedui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 
 public class Main {
     public static void main(String[] args) {
-        List<Expression> es=utils.getAllExpression(15,15);
-        System.out.println(es);
-        String str1="(10-(3+5))×2";
-        String str2="2×(10-(5+3))";
-
-            boolean result=utils.checkDuplicate(str1,str2);
-            if(result) System.out.println("重复");
-            else System.out.println("不重复");
-
-
-        System.out.println(utils.cal(str1));
-        System.out.println(utils.cal(str2));
-
+        System.out.println(Arrays.toString(args));
+        System.out.println("success");
+        Expression e1=Expression.splicing(new Expression("5"),new Expression("3"),'+');
+        Expression e2=Expression.splicing(new Expression("3"),new Expression("5"),'+');
+        System.out.println(e1.equals(e2));
+        List<Expression> list=new ArrayList<>();
+        list.add(e1);
+        System.out.println(list.contains(e1));
     }
 }
