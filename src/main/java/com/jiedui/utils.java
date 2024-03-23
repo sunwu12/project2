@@ -198,28 +198,21 @@ public class utils {
      */
     public static List<String> getInfixExpression(String str){
         List<String> infixExpression=new ArrayList<>();
-        int i=0;
-        String A;
-        String b= str.replace(" ","");
-        do{
-            if(b.charAt(i)=='+'||b.charAt(i)=='-'||b.charAt(i)=='×'||b.charAt(i)=='÷'||b.charAt(i)=='('||b.charAt(i)==')')
-            {
-                infixExpression.add(""+b.charAt(i));
-                i++;
+        StringBuilder sb=new StringBuilder();
+        str= str.replace(" ","");
+        Pattern pattern = Pattern.compile("[+×÷()-]");
+        for(int i=0; i<str.length();i++){
+            char ch=str.charAt(i);
+            Matcher matcher = pattern.matcher(Character.toString(ch));
+            if(!matcher.find()){
+                sb.append(ch);
+            }else{
+                if(sb.length()>0)infixExpression.add(sb.toString());
+                infixExpression.add(Character.toString(ch));
+                sb=new StringBuilder();
             }
-            else{
-                A="";
-                while((b.charAt(i)>=48&&b.charAt(i)<=57)||b.charAt(i)=='\''||b.charAt(i)=='/')
-                {
-                    A+=b.charAt(i);
-                    i++;
-                    if(i>=b.length())
-                        break;
-
-                }
-                infixExpression.add(A);
-            }
-        }while(i<b.length());
+        }
+        if(sb.length()>0)infixExpression.add(sb.toString());
         return infixExpression;
     }
     /*
@@ -262,6 +255,7 @@ public class utils {
         {
             s1.add(s2.pop());
         }
+        System.out.println(s1);
         return s1;
     }
 
@@ -283,8 +277,8 @@ public class utils {
 
     //判断两个后缀表达式是否重复
     public static Boolean checkDuplicate(String expression1, String expression2) {
-        List<String> e1=getInfixExpression(expression1);
-        List<String> e2=getInfixExpression(expression2);
+        List<String> e1=getPostfixExpression(expression1);
+        List<String> e2=getPostfixExpression(expression2);
         if(e1.size()!=e2.size())return false;
         if(!Objects.equals(cal(expression1), cal(expression2)))return false;
         String[] sinList1=new String[2];

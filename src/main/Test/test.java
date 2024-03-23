@@ -18,12 +18,12 @@ public class test {
         for (Expression e : es) {
             System.out.println(e);
         }
-        TxtHandle.txtRecord(es,"../../src/resources/Exercises.txt",
-                "../../src/resources/Answers.txt");
-        String subPath="../../src/resources/Exercises.txt";
-        String ansPath="../../src/resources/Answers.txt";
-        String graPath="../../src/resources/Grade.txt";
-        TxtHandle.txtJudge(subPath,ansPath,graPath);
+//        TxtHandle.txtRecord(es,"../../src/resources/Exercises.txt",
+//                "../../src/resources/Answers.txt");
+//        String subPath="../../src/resources/Exercises.txt";
+//        String ansPath="../../src/resources/Answers.txt";
+//        String graPath="../../src/resources/Grade.txt";
+//        TxtHandle.txtJudge(subPath,ansPath,graPath);
     }
 
 }
