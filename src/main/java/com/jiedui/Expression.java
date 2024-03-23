@@ -2,9 +2,9 @@ package com.jiedui;
 
 import java.util.Random;
 
-public class Expression extends Throwable {
+public class Expression {
     public String expression=null;//表达式字符串
-    String value=null;//表达式的值
+    public String value=null;//表达式的值
     char keySign=' ';//表达式的主运算符
     int num=0;//表达式中含有几个运算符
 
@@ -19,12 +19,13 @@ public class Expression extends Throwable {
         this.expression=value;
     }
 
+    //生成随机值
     public static String getRandomValue(int maxValue){
         Random random=new Random();
         if(random.nextBoolean()){//生成随机真分数
-            String str=utils.getFraction(random.nextInt(maxValue),random.nextInt(maxValue));
-            while(str==null)str=utils.getFraction(random.nextInt(maxValue),random.nextInt(maxValue));
-            return str;
+            Fraction fraction=new Fraction(random.nextInt(maxValue),random.nextInt(maxValue));
+            while(fraction.value==null)fraction=new Fraction(random.nextInt(maxValue),random.nextInt(maxValue));
+            return fraction.value;
         }else return String.valueOf(random.nextInt(maxValue));//生成随机整数
     }
 
@@ -32,9 +33,10 @@ public class Expression extends Throwable {
     public static Expression splicing(Expression leftE,Expression rightE,char sign){
         if(leftE==null||rightE==null)return null;
         int newNum=leftE.num+rightE.num+1;
+        //运算符个数超过3个
         if(newNum>3)return null;
         Expression newE=new Expression();
-        if((newE.value=utils.divisionFractionCalculate(leftE.value,rightE.value,sign))==null)return null;
+        if((newE.value=Fraction.divisionFractionCalculate(leftE.value,rightE.value,sign))==null)return null;
         //添加括号
         if(sign=='×'||sign=='÷'){
             if(leftE.keySign=='+'||leftE.keySign=='-')addBrackets(leftE);
@@ -62,5 +64,13 @@ public class Expression extends Throwable {
                 ", 表达式=\" " + expression + " \"" +
                 ", 运算符个数=" + num +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass()!= o.getClass()) return false;
+        Expression exp = (Expression) o;
+        return utils.checkDuplicate(this.expression,exp.expression);
     }
 }
