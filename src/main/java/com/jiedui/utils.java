@@ -122,7 +122,7 @@ public class utils {
      */
     public static String divisionFractionCalculate(String str1, String str2, char A) {
         if (str1 != null && str2 != null) {
-            int[]str1_num;
+            int[]str1_num;//数组用于存储分子和分母
             int[]str2_num;
             str1_num=transformNum(str1);
             str2_num=transformNum(str2);
