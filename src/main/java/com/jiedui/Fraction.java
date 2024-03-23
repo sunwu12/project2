@@ -60,6 +60,7 @@ public class Fraction {
    */
     public static int calculateGCD(int x, int y) {
         if (x % y == 0) return y;
+        //y作分子，x%y作分母进入循环
         return calculateGCD(y, x % y);
     }
 
@@ -70,7 +71,8 @@ public class Fraction {
         Fraction f2=new Fraction(str2);
         int Numerator=0,Denominator=0;
         if (f1.value != null && f2.value != null) {
-            if (sign == '+') {
+            if (sign == '+'||sign=='-') {
+                if(sign=='-')f2.numerator=-f2.numerator;
                 if (f1.denominator == f2.denominator) {
                     Numerator = f1.numerator+f2.numerator;
                     Denominator = f1.denominator;
@@ -78,23 +80,9 @@ public class Fraction {
                     Numerator = f1.numerator * f2.denominator + f2.numerator * f1.denominator;
                     Denominator = f1.denominator * f2.denominator;
                 }
-            }
-            else if (sign == '-') {
-                if (f1.denominator == f2.denominator) {
-                    Numerator = f1.numerator - f2.numerator;
-                    if(Numerator<0){
-                        return null;
-                    }
-                    Denominator = f1.denominator;
-                } else {
-                    Numerator = f1.numerator * f2.denominator - f2.numerator * f1.denominator;
-                    Denominator = f1.denominator * f2.denominator;
-                    if(Numerator<0){
-                        return null;
-                    }
-                }
-            }
-            else if(sign=='×'){
+                if(sign=='-')f2.numerator=-f2.numerator;
+                if(Numerator<0) return null;//结果不能为负
+            } else if(sign=='×'){
                 Numerator=f1.numerator*f2.numerator;
                 Denominator=f1.denominator*f2.denominator;
             }

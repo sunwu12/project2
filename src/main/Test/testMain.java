@@ -1,5 +1,4 @@
 import com.jiedui.Expression;
-import com.jiedui.TxtHandle;
 import com.jiedui.utils;
 import org.junit.Test;
 
@@ -13,10 +12,11 @@ public class testMain {
     @Test
     public void testGetExpression(){
         //maxvalue是表达式中的最大值，生成的数值均不会大于该数值，num是指表达式中的运算符个数
-        List<Expression> es=utils.getAllExpression(1,15);
+        List<Expression> es=utils.getAllExpression(1,2);
         for(Expression e : es){
             System.out.println(e);
         }
+        //TxtHandle.txtRecord(es);
     }
 
 

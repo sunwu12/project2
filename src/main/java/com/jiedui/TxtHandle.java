@@ -3,6 +3,7 @@ package com.jiedui;
 import cn.hutool.core.io.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,12 +12,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class TxtHandle {
-    public static void txtRecord(List<Expression> es, String subjectPath,String answerPath){
-
+    public static void txtRecord(List<Expression> es){
             AtomicInteger i = new AtomicInteger();
             AtomicInteger j = new AtomicInteger();
-        File f1=FileUtil.file(subjectPath);
-            List<String> a=FileUtil.readUtf8Lines(f1);
+            String subjectPath="src/resources/Exercises.txt";
+            String answerPath="src/resources/Answers.txt";
+            List<String> a=FileUtil.readUtf8Lines(subjectPath);
             if(a.isEmpty()) {
                 i.set(1);
                 j.set(1);
@@ -29,20 +30,17 @@ public class TxtHandle {
             List<String> subjectList=es.stream().map(e->i.getAndIncrement()+". "+e.expression+" = ").collect(Collectors.toList());
             List<String> answerList=es.stream().map(e->j.getAndIncrement()+". "+e.value).collect(Collectors.toList());
 
-
-        File f2=FileUtil.file(answerPath);
-            FileUtil.appendUtf8Lines(subjectList,f1);
-            FileUtil.appendUtf8Lines(answerList,f2);
+            FileUtil.appendUtf8Lines(subjectList,subjectPath);
+            FileUtil.appendUtf8Lines(answerList,answerPath);
         }
 
-        public static void txtJudge(String subjectPath,String answerPath,String gradePath){
-
+        public static void txtJudge(String subjectPath,String answerPath)throws IOException {
                 List<String> subjectList=FileUtil.readUtf8Lines(subjectPath);
                 List<String> anwerList=FileUtil.readUtf8Lines(answerPath);
                 List<String> expList=subjectList.stream().map(s->s.replace(" =","")
-                        .split("^\\d+\\.")[1]).collect(Collectors.toList());
+                        .split("^\\d+\\.")[1]).toList();
                 List<String> valList=anwerList.stream().map(s->s.replace(" =","")
-                        .split("^\\d+\\.")[1].trim()).collect(Collectors.toList());
+                        .split("^\\d+\\.")[1].trim()).toList();
                 int[] gradeList=new int[subjectList.size()];
                 for(int i=0;i<subjectList.size();i++){
                     gradeList[i]= Objects.equals(utils.cal(expList.get(i)), valList.get(i)) ?1:0;
@@ -63,7 +61,7 @@ public class TxtHandle {
                 if(sb2.charAt(sb2.length()-1)==',')sb2.deleteCharAt(sb2.length()-1);
                 sb1.append(")");
                 sb2.append(")");
-                gradePath="src\\resources\\Grade.txt";
+                String gradePath="src/resources/Answers.txt";
                 FileUtil.writeUtf8Lines(new ArrayList<>(List.of(new String[]{sb1.toString(),sb2.toString()})), gradePath);
             }
         }

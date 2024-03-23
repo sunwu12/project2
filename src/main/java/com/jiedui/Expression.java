@@ -55,8 +55,6 @@ public class Expression {
         E.expression='('+E.expression+')';
     }
 
-    //判断能否相减
-
     @Override
     public String toString() {
         return "Expression{" +

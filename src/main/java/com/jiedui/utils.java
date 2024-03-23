@@ -87,12 +87,12 @@ public class utils {
             if(!matcher.find()){
                 sb.append(ch);
             }else{
-                if(sb.length()>0)infixExpression.add(sb.toString());
+                if(!sb.isEmpty())infixExpression.add(sb.toString());
                 infixExpression.add(Character.toString(ch));
                 sb=new StringBuilder();
             }
         }
-        if(sb.length()>0)infixExpression.add(sb.toString());
+        if(!sb.isEmpty())infixExpression.add(sb.toString());
         return infixExpression;
     }
     /*
