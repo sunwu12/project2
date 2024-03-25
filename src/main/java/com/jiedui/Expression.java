@@ -32,7 +32,7 @@ public class Expression {
         Expression newE=new Expression();
         //运算符个数超过3个
         if(newNum> newE.maxNum)return null;
-        if((newE.value=Fraction.divisionFractionCalculate(leftE.value,rightE.value,sign))==null)return null;
+        if((newE.value=Fraction.fractionCalculate(leftE.value,rightE.value,sign))==null)return null;
         //添加括号
         if(sign=='×'||sign=='÷'){
             if(leftE.keySign=='+'||leftE.keySign=='-')addBrackets(leftE);
@@ -66,6 +66,6 @@ public class Expression {
         if (this == o) return true;
         if (o == null || getClass()!= o.getClass()) return false;
         Expression exp = (Expression) o;
-        return utils.checkDuplicate(this.expression,exp.expression);
+        return ExpHandle.checkDuplicate(this.expression,exp.expression);
     }
 }

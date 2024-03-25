@@ -47,7 +47,7 @@ public class TxtHandle {
                 int[] gradeList=new int[subjectList.size()];
                 for(int i=0;i<subjectList.size();i++){
                     //计算正确则为1，反之为0
-                    gradeList[i]= Objects.equals(utils.cal(expList.get(i)), valList.get(i)) ?1:0;
+                    gradeList[i]= Objects.equals(ExpHandle.calExpressionString(expList.get(i)), valList.get(i)) ?1:0;
                 }
                 StringBuilder sb1=new StringBuilder();
                 StringBuilder sb2=new StringBuilder();

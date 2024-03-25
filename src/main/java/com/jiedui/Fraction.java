@@ -12,6 +12,7 @@ public class Fraction {
     public Fraction(String str) {
         //分割
         String[] arr=str.split("['/]");
+        //System.out.println(Arrays.toString(arr));
         //字符串转成数字
         List<Integer> list= Arrays.stream(arr).map(Integer::parseInt).toList();
         int size=list.size();
@@ -25,31 +26,31 @@ public class Fraction {
     public Fraction(int numerator,int denominator) {
         this.numerator=numerator;
         this.denominator=denominator;
-        transformValue(this);
+        transformValue();
     }
 
     public Fraction(){}
     /*
-    转换出分子和分母
+    分数约分
      */
-    public static void transformValue(Fraction f) {
+    private void transformValue() {
         //分母为0，则value为null
-        if(f.denominator==0){
-            f.value=null;
-        }else if(f.numerator==0){
-            f.value="0";
+        if(this.denominator==0){
+            this.value=null;
+        }else if(this.numerator==0){
+            this.value="0";
         } else {
-            int gcd = calculateGCD(f.numerator, f.denominator);
-            f.numerator /= gcd;
-            f.denominator /= gcd;
+            int gcd = calculateGCD(this.numerator, this.denominator);
+            this.numerator /= gcd;
+            this.denominator /= gcd;
             //分母为1，返回整数
-            if(f.denominator==1)f.value=f.numerator+"";
-            else if (f.numerator < f.denominator) {
-                f.value = f.numerator + "/" + f.denominator;
-            } else if (f.numerator > f.denominator) {
-                int a = f.numerator / f.denominator;
-                int b = (f.numerator % f.denominator);
-                f.value=a+"'"+b+"/"+f.denominator;
+            if(this.denominator==1)this.value=this.numerator+"";
+            else if (this.numerator < this.denominator) {
+                this.value = this.numerator + "/" + this.denominator;
+            } else if (this.numerator > this.denominator) {
+                int a = this.numerator / this.denominator;
+                int b = (this.numerator % this.denominator);
+                this.value=a+"'"+b+"/"+this.denominator;
             }
         }
     }
@@ -57,15 +58,15 @@ public class Fraction {
     /*
   计算最大公约数
    */
-    public static int calculateGCD(int x, int y) {
+    private static int calculateGCD(int x, int y) {
         if (x % y == 0) return y;
         //y作分子，x%y作分母进入循环
         return calculateGCD(y, x % y);
     }
 
 
-    //转换出分数
-    public static String divisionFractionCalculate(String str1,String str2,char sign) {
+    //计算两个分数
+    public static String fractionCalculate(String str1,String str2,char sign) {
         Fraction f1=new Fraction(str1);
         Fraction f2=new Fraction(str2);
         int Numerator=0,Denominator=0;

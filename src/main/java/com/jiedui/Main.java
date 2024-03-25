@@ -1,8 +1,5 @@
 package com.jiedui;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -35,7 +32,7 @@ public class Main {
                 return;
             }
             else {
-                List<Expression> es = utils.getAllExpression(count, maxValue);
+                List<Expression> es = ExpGeneration.getAllExpression(count, maxValue);
                 TxtHandle.txtRecord(es);
             }
         }else if(count!=-1||maxValue!=-1) {
