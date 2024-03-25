@@ -4,7 +4,7 @@ import java.util.*;
 
 
 public class ExpGeneration {
-    static char[] signArr = {'+', '-', '×', '÷'};
+    private static final char[] signArr = {'+', '-', '×', '÷'};
 
     //随机生成表达式数组
     public static List<Expression> getAllExpression(int count, int maxValue) {

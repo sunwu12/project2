@@ -26,10 +26,9 @@ public class Fraction {
     public Fraction(int numerator,int denominator) {
         this.numerator=numerator;
         this.denominator=denominator;
-        transformValue();
+        this.transformValue();
     }
 
-    public Fraction(){}
     /*
     分数约分
      */
@@ -40,9 +39,8 @@ public class Fraction {
         }else if(this.numerator==0){
             this.value="0";
         } else {
-            int gcd = calculateGCD(this.numerator, this.denominator);
-            this.numerator /= gcd;
-            this.denominator /= gcd;
+            //化简
+            this.fractionSimplify();
             //分母为1，返回整数
             if(this.denominator==1)this.value=this.numerator+"";
             else if (this.numerator < this.denominator) {
@@ -56,12 +54,17 @@ public class Fraction {
     }
 
     /*
-  计算最大公约数
+        分数化简
    */
-    private static int calculateGCD(int x, int y) {
-        if (x % y == 0) return y;
-        //y作分子，x%y作分母进入循环
-        return calculateGCD(y, x % y);
+    private void fractionSimplify() {
+        int a=this.numerator,b=this.denominator;
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        this.numerator/=a;
+        this.denominator/=a;
     }
 
 

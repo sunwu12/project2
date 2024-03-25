@@ -21,7 +21,6 @@ public class Main {
             }
 
         }
-        //将表达式集合写入题目文件和答案文件中
         if(count!=-1&&maxValue!=-1) {
             if(count<=0) {
                 System.out.println("输入的题目个数不能小于1");
@@ -32,7 +31,9 @@ public class Main {
                 return;
             }
             else {
+                //生成随机表达式题目集合
                 List<Expression> es = ExpGeneration.getAllExpression(count, maxValue);
+                //写入到文件中
                 TxtHandle.txtRecord(es);
             }
         }else if(count!=-1||maxValue!=-1) {

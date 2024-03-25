@@ -10,15 +10,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class TxtHandle {
+    private static final String SUBJECT="src/resources/Exercises.txt";
+    private static final String ANSWER="src/resources/Answers.txt";
+    private static final String GRADE="src/resources/Grade.txt";
+
     public static void txtRecord(List<Expression> es){
             AtomicInteger i = new AtomicInteger();
             AtomicInteger j = new AtomicInteger();
-//            String subjectPath="src/resources/Exercises_test01.txt";
-//            String answerPath="src/resources/Answers_test01.txt";
-            String subjectPath= "Exercises.txt";
-            String answerPath= "Answers.txt";
             //读取文件中最大序号
-            List<String> a=FileUtil.readUtf8Lines(subjectPath);
+            List<String> a=FileUtil.readUtf8Lines(SUBJECT);
             if(a.isEmpty()) {
                 i.set(1);
                 j.set(1);
@@ -32,8 +32,8 @@ public class TxtHandle {
             List<String> subjectList=es.stream().map(e->i.getAndIncrement()+". "+e.expression+" = ").collect(Collectors.toList());
             List<String> answerList=es.stream().map(e->j.getAndIncrement()+". "+e.value).collect(Collectors.toList());
 
-            FileUtil.appendUtf8Lines(subjectList,subjectPath);
-            FileUtil.appendUtf8Lines(answerList,answerPath);
+            FileUtil.appendUtf8Lines(subjectList,SUBJECT);
+            FileUtil.appendUtf8Lines(answerList,ANSWER);
         }
 
         public static void txtJudge(String subjectPath,String answerPath)throws Exception {
@@ -66,7 +66,6 @@ public class TxtHandle {
                 if(sb2.charAt(sb2.length()-1)==',')sb2.deleteCharAt(sb2.length()-1);
                 sb1.append(")");
                 sb2.append(")");
-                String gradePath="src/resources/Answers_test01.txt";
-                FileUtil.writeUtf8Lines(new ArrayList<>(List.of(new String[]{sb1.toString(),sb2.toString()})), gradePath);
+                FileUtil.writeUtf8Lines(new ArrayList<>(List.of(new String[]{sb1.toString(),sb2.toString()})), GRADE);
             }
         }
